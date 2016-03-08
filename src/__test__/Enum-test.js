@@ -2,8 +2,11 @@
 
 const expect = require('expect');
 const Enum = require('../Enum');
+const expectEnum = require('expect-enum');
 
-describe('reducers/Database', () => {
+expect.extend(expectEnum);
+
+describe('Enum', () => {
 
     it('should handle Array Number values', () => {
         return expect(Enum([1, 2, 3])).toEqual({
@@ -14,11 +17,15 @@ describe('reducers/Database', () => {
     });
 
     it('should handle Array String values', () => {
-        return expect(Enum(['one', 'two', 'three'])).toEqual({
+        const result = Enum(['one', 'two', 'three']);
+        const expected = {
             'one': 'one',
             'two': 'two',
             'three': 'three',
-        });
+        };
+
+        expect(result).toEqual(expected);
+        expect(result).toBeFrozen();
     });
 
     it('should handle arguments String values', () => {

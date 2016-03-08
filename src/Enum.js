@@ -1,5 +1,31 @@
 'use strict';
 
+const R = require('ramda');
+
+const EnumFromObject = Object.freeze;
+
+const EnumFromArray = R.reduce((acc, value) => EnumValue(value)(acc), {});
+
+const EnumFromPairs = R.reduce((acc, pair) => EnumPairValue(pair)(acc), {});
+
+const EnumKeyValue = (key, value) => R.assoc(
+    R.ifElse(
+        R.is(String),
+        R.identity,
+        String
+    )(key), value
+);
+
+const EnumValue = value => EnumKeyValue(value, value);
+
+const EnumPairValue = pair => EnumKeyValue(pair[0], pair[1]);
+
+const excludeEmpty = R.filter(R.pipe(R.length, R.gte(R.__, 1)));
+
+const debug = R.tap(console.log);
+
+const isSingleArg = R.pipe(R.length, R.equals(1));
+
 /**
  * @alias module:enum
  * @example
@@ -21,91 +47,24 @@ export default Enum(`
  * @param {Object|Array|Map|Set|...String} values Input arguments.
  * @return {Object} Frozen object corresponding to given arguments.
  */
-function Enum (values) {
 
-    const length = arguments.length;
+const EnumSingle = R.cond([
+    [R.is(Array), R.pipe(EnumFromArray)],
+    [R.is(Map), R.pipe(Array.from, EnumFromPairs)],
+    [R.is(Set), R.pipe(Array.from, EnumFromArray)],
+    [R.is(String), R.pipe(R.split(/[\s]+/ig), excludeEmpty, EnumFromArray)],
+    [R.T, R.identity],
+]);
 
-    if (values instanceof Array) {
-        return EnumFromArray(values);
-    } else if (values instanceof Map) {
-        return EnumFromMap(values);
-    } else if (values instanceof Set) {
-        return EnumFromSet(values);
-    } else if (length === 1 && typeof values === 'string') {
-        return EnumFromString(values);
-    } else if (typeof values === 'object') {
-        return EnumFromObject(values);
-    } else {
-        return EnumFromArgs(arguments);
-    }
-    return values;
-}
+const EnumMultiple = R.cond([
+    [R.pipe(R.head, R.is(String)), EnumFromArray],
+    [R.T, R.identity],
+]);
 
-function EnumValue (value) {
-    const obj = {};
-
-    obj[value] = value;
-    return obj;
-}
-
-function EnumItem (key, value) {
-    const obj = {};
-
-    obj[key] = value;
-    return obj;
-}
-
-function EnumFromObject (obj) {
-    return Object.freeze(obj);
-}
-
-function EnumFromArgs (args) {
-    return EnumFromArray(Array.from(args));
-}
-
-function EnumFromArgsSafe (args) {
-    return EnumFromObject(Object.keys(args).reduce(
-        (obj, key) => Object.assign(obj, EnumValue(args[key])), {}
-    ));
-}
-
-function EnumFromArray (values) {
-    return EnumFromObject(values.reduce(
-        (obj, value) => Object.assign(obj, EnumValue(value)), {}
-    ));
-}
-
-function EnumFromString (values) {
-    return EnumFromArray(values
-        .split(/[\s]+/ig)
-        .filter(v => v.length > 0)
-    );
-}
-
-function EnumFromArrayFast (values) {
-    const obj = {};
-    const length = values.length;
-    let index = -1;
-
-    while (++index < length) {
-        const key = values[index];
-
-        obj[key] = key;
-    }
-    return EnumFromObject(obj);
-}
-
-function EnumFromMap (values) {
-    return EnumFromObject(
-        Array.from(values.keys()).reduce(
-            (obj, key) => Object.assign(obj, EnumItem(key, values.get(key))), {}
-        )
-    );
-}
-
-function EnumFromSet (values) {
-    return Array.from(values.values())
-        .reduce((obj, value) => Object.assign(obj, EnumValue(value)), {});
-}
+const Enum = R.unapply(R.ifElse(
+    isSingleArg,
+    R.pipe(R.head, EnumSingle, EnumFromObject),
+    R.pipe(EnumMultiple, EnumFromObject)
+));
 
 exports = module.exports = Enum;

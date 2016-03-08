@@ -27,9 +27,11 @@
   "author": "bydooweedoo <bydooweedoo@gmail.com>",
   "license": "PRIVATE",
   "dependencies": {
+    "ramda": "^0.19.1"
   },
   "devDependencies": {
     "expect": "^1.14.0",
+    "expect-enum": "file:../expect-enum",
     "istanbul": "^0.4.2",
     "jsdoc-to-markdown": "^1.3.3",
     "matcha": "^0.6.1",
