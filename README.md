@@ -6,7 +6,7 @@
 
 Using [npm](https://www.npmjs.org/):
 
-  $ npm install renum
+    $ npm install renum --save
 
 Then
 
@@ -17,6 +17,36 @@ export default renum(
   'INCREMENT',
   'DECREMENT'
 );
+```
+
+## Usage
+
+### From primitives arguments
+
+#### Strings
+```js
+renum('1', '2', '3') //=> {1: '1', 2: '2', 3: '3'}
+```
+
+#### Numbers
+```js
+renum(1, 2, 3) //=> {1: 1, 2: 2, 3: 3}
+```
+
+#### Boolean
+```js
+renum(true, false, true) //=> {true: true, false: false}
+```
+
+#### Empty values
+```js
+renum(null, undefined) //=> {}
+```
+
+### From array
+
+```js
+renum(['1', 2, true]) //=> {1: '1', 2: 2, true: true}
 ```
 
 ## Extend
