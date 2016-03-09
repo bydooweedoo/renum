@@ -36,11 +36,6 @@ const EnumSingle = R.pipe(R.cond(extend), R.cond([
     [R.T, R.identity],
 ]));
 
-const EnumMultiple = R.cond([
-    [R.pipe(R.head, R.is(String)), EnumFromArray],
-    [R.T, R.identity],
-]);
-
 /**
  * @param {Object|Array|Map|Set|...String} values Input arguments.
  * @return {Object} Frozen object corresponding to given arguments.
