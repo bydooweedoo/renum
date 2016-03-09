@@ -1,7 +1,6 @@
 'use strict';
 
 const R = require('ramda');
-const debug = R.tap(console.log);
 
 module.exports = conditions => {
 

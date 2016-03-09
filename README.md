@@ -2,13 +2,15 @@
 
 `renum` is a small library to create frozen objects in javascript from multiple sources.
 
-## Installation
+## Getting started
 
-Using [npm](https://www.npmjs.org/):
+Install `renum` using [npm](https://www.npmjs.org/):
 
-    $ npm install renum --save
+```shell
+npm install renum --save
+```
 
-Then
+Then using ES6
 
 ```js
 import renum from 'renum';
@@ -19,13 +21,39 @@ export default renum(
 );
 ```
 
+Using ES5
+
+```js
+const renum = require('renum');
+
+module.exports = renum(
+  'INCREMENT',
+  'DECREMENT'
+);
+```
+
 ## Usage
 
-### From primitives arguments
+### From primitive arguments
 
 #### Strings
+
 ```js
 renum('1', '2', '3') //=> {1: '1', 2: '2', 3: '3'}
+```
+
+#### String
+```js
+renum('1 2 3') //=> {1: '1', 2: '2', 3: '3'}
+```
+
+#### Template String
+```js
+renum(`
+  1
+  2
+  3
+`) //=> {1: '1', 2: '2', 3: '3'}
 ```
 
 #### Numbers
@@ -43,15 +71,20 @@ renum(true, false, true) //=> {true: true, false: false}
 renum(null, undefined) //=> {}
 ```
 
+#### Symbol
+```js
+renum(Symbol(1), Symbol(f => f + 1)) //=> {Symbol(1): Symbol(1), Symbol(f => f + 1): 'Symbol(f => f + 1)'}
+```
+
 ### From Objects
 
-### Array
+#### Array
 
 ```js
 renum(['1', 2, true]) //=> {1: '1', 2: 2, true: true}
 ```
 
-### Pairs
+#### Pairs
 
 ```js
 renum([
@@ -60,13 +93,19 @@ renum([
 ]) //=> {INCREMENT: [Function], DECREMENT: [Function]}
 ```
 
-### Map
+#### Map
 
 ```js
 renum(new Map({INCREMENT: '+', DECREMENT: '-'})) //=> {INCREMENT: '+', DECREMENT: '-'}
 ```
 
-### Inception
+#### Set
+
+```js
+renum(new Set([1, 2, 3])) //=> {1: 1, 2: 2, 3: 3}
+```
+
+#### Inception
 
 ```js
 renum(1, renum(2, renum(3))) //=> {1: 1, 2: 2, 3: 3}
@@ -76,10 +115,10 @@ renum(1, renum(2, renum(3))) //=> {1: 1, 2: 2, 3: 3}
 
 In order to let you use `renum` with other libraries, you can implement your own translator.
 
-Example with `immutable`:
+Example for [`immutable`](https://www.npmjs.com/package/immutable):
 
 ```js
-// renum-immutable
+// renum-immutable.js
 import R from 'ramda';
 import Immutable from 'immutable';
 
@@ -93,25 +132,23 @@ module.exports = [
 And then:
 
 ```js
+import R from 'ramda';
 import renum from 'renum';
 
 // from a list of pairs
-renum.extend(require('renum-immutable'));
+renum.extend(require('./renum-immutable'));
 
 // or from arguments directly
 renum.extend(R.isEmpty, R.always({}));
 ```
 
-### Function signature
+## Testing
 
-`Predicate(value) : Function<Boolean>`
-
-`renum.extend(Predicate: Function, Transform: Function)`
-
-`renum.extend(ListOfPairs: Array<Predicate, Transform>)`
+```shell
+npm test
+```
 
 ## Motivations
 
-Firstly designed to create `action types` from `redux` based projects and easily be able to merge each other.
-
-Then also to learn Functional Programming.
+ * Firstly designed to create immutable `action types` from [`redux`](https://www.npmjs.com/package/redux) based projects and easily be able to merge each other.
+ * Learning Functional Programming.

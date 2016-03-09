@@ -1,7 +1,7 @@
 /**
- * @module enum
+ * @module renum
  * @version 1.0.0
- * @desc Immutable Enum without any dependencies.
+ * @desc Immutable Enum.
  * @example
  * Import `ES5`
  * ```js
@@ -28,4 +28,4 @@ const MyEnum = Enum([
  * ```
  * _Note_: An error will be throw if you tried to modify the `Enum`.
  */
-exports = module.exports = require('./Enum');
+module.exports = require('./Enum');

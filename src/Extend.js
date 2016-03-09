@@ -2,7 +2,6 @@
 
 const R = require('ramda');
 const Valid = require('./Valid');
-const debug = R.tap(console.log);
 const store = [
     [R.T, R.identity],
 ];

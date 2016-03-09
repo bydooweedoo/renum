@@ -1,42 +1,42 @@
 'use strict';
 
-const Enum = require('../Enum');
+const renum = require('..');
 
-suite('Enum #Array', () => {
+suite('renum #Array', () => {
     bench('EMPTY', () => {
-        Enum([]);
+        renum([]);
     });
 
     bench('5 Number items', () => {
-        Enum([1, 2, 3, 4, 5]);
+        renum([1, 2, 3, 4, 5]);
     });
 
     bench('5 String items', () => {
-        Enum(['1', '2', '3', '4', '5']);
+        renum(['1', '2', '3', '4', '5']);
     });
 });
 
-suite('Enum #Arguments', () => {
+suite('renum #Arguments', () => {
     bench('EMPTY', () => {
-        Enum(undefined);
+        renum(undefined);
     });
 
     bench('5 Number items', () => {
-        Enum(1, 2, 3, 4, 5);
+        renum(1, 2, 3, 4, 5);
     });
 
     bench('5 String items', () => {
-        Enum('1', '2', '3', '4', '5');
+        renum('1', '2', '3', '4', '5');
     });
 });
 
-suite('Enum #Object', () => {
+suite('renum #Object', () => {
     bench('EMPTY', () => {
-        Enum({});
+        renum({});
     });
 
     bench('5 Number items', () => {
-        Enum({
+        renum({
             '1': 1,
             '2': 2,
             '3': 3,
@@ -46,7 +46,7 @@ suite('Enum #Object', () => {
     });
 
     bench('5 String items', () => {
-        Enum({
+        renum({
             '1': '1',
             '2': '2',
             '3': '3',

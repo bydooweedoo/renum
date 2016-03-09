@@ -13,6 +13,8 @@ const EnumFromArray = Item.reduceWith(Item.Value);
 
 const EnumFromPairs = Item.reduceWith(Item.Pair);
 
+const ApplyToObject = R.apply(R.__, R.of({}));
+
 const EnumSingle = R.pipe(
     R.cond(Extend.conditions),
     R.cond([
@@ -29,7 +31,12 @@ const EnumSingle = R.pipe(
         [R.either(
             R.is(Number),
             R.is(Boolean)
-        ), R.pipe(Item.Value, R.apply(R.__, [{}]))],
+        ), R.pipe(Item.Value, ApplyToObject)],
+        [R.is(Symbol), R.pipe(
+            R.invoker(0, 'toString'),
+            Item.Value,
+            ApplyToObject
+        )],
         [R.T, R.identity],
     ])
 );
@@ -49,4 +56,4 @@ const Enum = R.unapply(R.ifElse(
 
 Enum.extend = Extend;
 
-exports = module.exports = Enum;
+module.exports = Enum;

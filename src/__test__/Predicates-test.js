@@ -15,27 +15,12 @@ describe('Predicates', () => {
         expect(Predicates).toBeA(Function);
     });
 
-    it('should have set method', () => {
-        expect(predicates).toHaveProp('set');
-        expect(predicates.set).toBeA(Function);
-    });
-
-    it('should have get method', () => {
-        expect(predicates).toHaveProp('get');
-        expect(predicates.get).toBeA(Function);
-    });
-
-    it('should have has method', () => {
-        expect(predicates).toHaveProp('has');
-        expect(predicates.has).toBeA(Function);
-    });
-
-    it('should have setValue method', () => {
-        expect(predicates).toHaveProp('setValue');
-        expect(predicates.setValue).toBeA(Function);
-    });
-
     describe('#set', () => {
+
+        it('should be a function property', () => {
+            expect(predicates).toHaveProp('set');
+            expect(predicates.set).toBeA(Function);
+        });
 
         it('should set given value at given key', () => {
             predicates.set('1', 2);
@@ -46,6 +31,11 @@ describe('Predicates', () => {
 
     describe('#setValue', () => {
 
+        it('should be a function property', () => {
+            expect(predicates).toHaveProp('setValue');
+            expect(predicates.setValue).toBeA(Function);
+        });
+
         it('should set given value at given key', () => {
             predicates.setValue(1, '2');
             expect(map.get('2')).toEqual(1);
@@ -54,6 +44,11 @@ describe('Predicates', () => {
     });
 
     describe('#has', () => {
+
+        it('should be a function property', () => {
+            expect(predicates).toHaveProp('has');
+            expect(predicates.has).toBeA(Function);
+        });
 
         it('should has existing key', () => {
             map.set('HAS', 'YES');
@@ -67,6 +62,11 @@ describe('Predicates', () => {
     });
 
     describe('#get', () => {
+
+        it('should be a function property', () => {
+            expect(predicates).toHaveProp('get');
+            expect(predicates.get).toBeA(Function);
+        });
 
         it('should get existing key', () => {
             map.set('HAS', 'YES');

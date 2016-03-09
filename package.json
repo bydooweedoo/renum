@@ -23,7 +23,7 @@
     "watch:coverage": "nodemon $npm_package_config_test_files $npm_package_config_source_files --delay 2500ms -x 'npm run coverage'"
   },
   "private": true,
-  "keywords": [],
+  "keywords": ["enum", "constants", "freeze", "immutable", "ramda", "redux"],
   "author": "bydooweedoo <bydooweedoo@gmail.com>",
   "license": "PRIVATE",
   "dependencies": {

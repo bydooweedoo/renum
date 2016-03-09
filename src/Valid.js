@@ -9,7 +9,14 @@ const isPair = R.both(
     R.pipe(R.length, R.equals(2))
 );
 
-const arePairs = R.both(R.is(Array), R.pipe(R.head, isPair));
+const arePairs = R.both(
+    R.is(Array),
+    R.pipe(
+        R.reject(isPair),
+        R.length,
+        R.equals(0)
+    )
+);
 
 const isCondition = R.both(
     R.is(Function),
