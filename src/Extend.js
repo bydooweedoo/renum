@@ -20,8 +20,8 @@ const ExtendSingle = R.ifElse(
     R.both(
         R.pipe(R.length, R.equals(2)),
         R.both(
-            R.pipe(R.head, Valid.isCondition),
-            R.pipe(R.last, Valid.isPredicate)
+            R.pipe(R.head, Valid.isPredicate),
+            R.pipe(R.last, Valid.isTransform)
         )
     ),
     mergeConditions,

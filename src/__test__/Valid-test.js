@@ -73,26 +73,6 @@ describe('Valid', () => {
 
     });
 
-    describe('#isCondition', () => {
-
-        it('should be a function property', () => {
-            expect(Valid).toHaveProp('isCondition');
-            expect(Valid.isCondition).toBeA(Function);
-        });
-
-        it('should returns true if given arg is a valid condition', () => {
-            expect(Valid.isCondition(R.is(Array))).toBe(true);
-            expect(Valid.isCondition(f => true)).toBe(true);
-        });
-
-        it('should returns falseif given arg is not a valid condition', () => {
-            expect(Valid.isCondition([1, 2])).toBe(false);
-            expect(Valid.isCondition(() => true)).toBe(false);
-            expect(Valid.isCondition((a, b, c) => true)).toBe(false);
-        });
-
-    });
-
     describe('#isPredicate', () => {
 
         it('should be a function property', () => {
@@ -101,12 +81,32 @@ describe('Valid', () => {
         });
 
         it('should returns true if given arg is a valid condition', () => {
-            expect(Valid.isPredicate(R.of)).toBe(true);
-            expect(Valid.isPredicate((a, b, c) => {})).toBe(true);
+            expect(Valid.isPredicate(R.is(Array))).toBe(true);
+            expect(Valid.isPredicate(f => true)).toBe(true);
         });
 
         it('should returns falseif given arg is not a valid condition', () => {
             expect(Valid.isPredicate([1, 2])).toBe(false);
+            expect(Valid.isPredicate(() => true)).toBe(false);
+            expect(Valid.isPredicate((a, b, c) => true)).toBe(false);
+        });
+
+    });
+
+    describe('#isTransform', () => {
+
+        it('should be a function property', () => {
+            expect(Valid).toHaveProp('isTransform');
+            expect(Valid.isTransform).toBeA(Function);
+        });
+
+        it('should returns true if given arg is a valid condition', () => {
+            expect(Valid.isTransform(R.of)).toBe(true);
+            expect(Valid.isTransform((a, b, c) => {})).toBe(true);
+        });
+
+        it('should returns falseif given arg is not a valid condition', () => {
+            expect(Valid.isTransform([1, 2])).toBe(false);
         });
 
     });

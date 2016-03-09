@@ -18,7 +18,7 @@ const arePairs = R.both(
     )
 );
 
-const isCondition = R.both(
+const isPredicate = R.both(
     R.is(Function),
     R.pipe(
         R.prop('length'),
@@ -26,7 +26,7 @@ const isCondition = R.both(
     )
 );
 
-const isPredicate = R.both(
+const isTransform = R.both(
     R.is(Function),
     R.pipe(
         R.prop('length'),
@@ -38,6 +38,6 @@ module.exports = {
     isSingleArg,
     isPair,
     arePairs,
-    isCondition,
     isPredicate,
+    isTransform,
 };

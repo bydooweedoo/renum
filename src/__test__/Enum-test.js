@@ -82,6 +82,9 @@ describe('renum', () => {
     });
 
     it('should handle pair values', () => {
+        const inc = n => n + 1;
+        const dec = n => n - 1;
+
         expect(renum([
             ['TRUE', true],
             ['FALSE', false],
@@ -90,11 +93,11 @@ describe('renum', () => {
             'FALSE': false,
         });
         expect(renum([
-            ['INCREMENT', n => n + 1],
-            ['DECREMENT', n => n - 1],
+            ['INCREMENT', inc],
+            ['DECREMENT', dec],
         ])).toEqual({
-            INCREMENT: n => n + 1,
-            DECREMENT: n => n - 1,
+            INCREMENT: inc,
+            DECREMENT: dec,
       });
     });
 
