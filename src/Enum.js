@@ -1,16 +1,17 @@
 'use strict';
 
 const R = require('ramda');
+const Utils = require('./Utils');
 const Valid = require('./Valid');
 const Item = require('./Item');
 const Extend = require('./Extend');
 const debug = R.tap(console.log);
 
 const EnumFromObject = Object.freeze;
-const EnumFromArray = R.reduce((acc, value) => Item.Value(value)(acc), {});
-const EnumFromPairs = R.reduce((acc, pair) => Item.Pair(pair)(acc), {});
 
-const excludeEmpty = R.filter(R.pipe(R.length, R.gte(R.__, 1)));
+const EnumFromArray = Item.reduceWith(Item.Value);
+
+const EnumFromPairs = Item.reduceWith(Item.Pair);
 
 const EnumSingle = R.pipe(
     R.cond(Extend.conditions),
@@ -21,7 +22,9 @@ const EnumSingle = R.pipe(
         [R.is(Map), R.pipe(Array.from, EnumFromPairs)],
         [R.is(Set), R.pipe(Array.from, EnumFromArray)],
         [R.is(String), R.pipe(
-            R.split(/[\s]+/ig), excludeEmpty, EnumFromArray
+            R.split(/[\s]+/ig),
+            Utils.excludeEmpty,
+            EnumFromArray
         )],
         [R.either(
             R.is(Number),
@@ -38,7 +41,10 @@ const EnumSingle = R.pipe(
 const Enum = R.unapply(R.ifElse(
     Valid.isSingleArg,
     R.pipe(R.head, EnumSingle, EnumFromObject),
-    R.pipe(R.reduce((acc, value) => R.merge(acc, EnumSingle(value)), {}), EnumFromObject)
+    R.pipe(R.reduce(R.converge(R.merge, [
+        R.pipe(R.nthArg(1), EnumSingle),
+        R.nthArg(0)
+    ]), {}), EnumFromObject)
 ));
 
 Enum.extend = Extend;

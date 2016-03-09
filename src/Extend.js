@@ -5,6 +5,7 @@ const Valid = require('./Valid');
 const conditions = [[R.T, R.identity]];
 
 const prependExtend = R.invoker(3, 'splice')(0, 0, R.__, conditions);
+
 const ExtendSingle = R.ifElse(
     R.both(
         R.pipe(R.length, R.equals(2)),
