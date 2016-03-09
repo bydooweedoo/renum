@@ -156,6 +156,18 @@ describe('Enum', () => {
         });
     });
 
+    it('should extend with given pairs of condition and operator', () => {
+        Enum.extend([
+            [Immutable.Map.isMap, R.invoker(0, 'toObject')],
+            [Immutable.Seq.isSeq, R.invoker(0, 'toObject')],
+            [Immutable.Stack.isStack, R.invoker(0, 'toJS')],
+        ]);
+        expect(Enum(new Immutable.Map({ '1': 'one', '2': 'two', }))).toEqual({
+            '1': 'one',
+            '2': 'two',
+        });
+    });
+
     it.skip('should not be able to override Enum values', () => {
         expect(Enum('ADD', 'REMOVE', 'CLEAR')).toNotBeEditable();
     });
