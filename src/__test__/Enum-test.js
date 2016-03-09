@@ -13,6 +13,14 @@ describe('Enum', () => {
         expect(Enum([1, 2, 3])).toBeFrozen();
     });
 
+    it('should handle undefined', () => {
+        expect(Enum(undefined)).toEqual({});
+    });
+
+    it('should handle null', () => {
+        expect(Enum(null)).toEqual({});
+    });
+
     it('should handle Array Number values', () => {
         expect(Enum([1, 2, 3])).toEqual({
             '1': 1,

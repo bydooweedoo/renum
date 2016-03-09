@@ -13,13 +13,16 @@ const EnumFromPairs = R.reduce((acc, pair) => Item.Pair(pair)(acc), {});
 const excludeEmpty = R.filter(R.pipe(R.length, R.gte(R.__, 1)));
 
 const EnumSingle = R.pipe(R.cond(extend), R.cond([
+    [R.isNil, R.always({})],
     [Valid.arePairs, EnumFromPairs],
     [R.is(Array), EnumFromArray],
     [R.is(Map), R.pipe(Array.from, EnumFromPairs)],
     [R.is(Set), R.pipe(Array.from, EnumFromArray)],
     [R.is(String), R.pipe(R.split(/[\s]+/ig), excludeEmpty, EnumFromArray)],
-    [R.is(Number), R.pipe(Item.Value, R.apply(R.__, [{}]))],
-    [R.is(Boolean), R.pipe(Item.Value, R.apply(R.__, [{}]))],
+    [R.either(
+        R.is(Number),
+        R.is(Boolean)
+    ), R.pipe(Item.Value, R.apply(R.__, [{}]))],
     [R.T, R.identity],
 ]));
 
