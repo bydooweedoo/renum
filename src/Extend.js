@@ -10,7 +10,7 @@ const predicates = require('./Predicates')(new Map());
 const conditions = require('./Conditions')(store);
 
 const mergeConditions = R.cond([
-    [R.pipe(R.head, predicates.has), f => R.pipe(conditions.update(predicates.getPair(f), f))],
+    [predicates.hasPair, f => R.pipe(conditions.update(predicates.getPair(f), f))],
     [R.T, R.pipe(
         R.tap(R.pipe(R.head, predicates.setValue(conditions.getIndex()))),
         R.tap(conditions.append)
