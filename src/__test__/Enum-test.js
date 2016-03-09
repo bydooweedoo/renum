@@ -4,6 +4,7 @@ const R = require('ramda');
 const expect = require('expect');
 const Enum = require('../Enum');
 const expectEnum = require('expect-enum');
+const Immutable = require('immutable');
 
 expect.extend(expectEnum);
 
@@ -148,9 +149,10 @@ describe('Enum', () => {
     });
 
     it('should extend with given condition and operator', () => {
-        Enum.extend(R.equals(42), R.always(Enum(24)));
-        expect(Enum(42)).toEqual({
-            '24': 24,
+        Enum.extend(Immutable.List.isList, R.invoker(0, 'toArray'));
+        expect(Enum(Immutable.List.of(1, 2))).toEqual({
+            '1': 1,
+            '2': 2,
         });
     });
 

@@ -32,6 +32,7 @@
   "devDependencies": {
     "expect": "^1.14.0",
     "expect-enum": "file:../expect-enum",
+    "immutable": "^3.7.6",
     "istanbul": "^0.4.2",
     "jsdoc-to-markdown": "^1.3.3",
     "matcha": "^0.6.1",
