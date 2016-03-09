@@ -168,6 +168,21 @@ describe('Enum', () => {
         });
     });
 
+    it('should override extend if condition are equal', () => {
+        const equals42 = R.equals(42);
+
+        Enum.extend(equals42, R.always(Enum('ORIGINAL')));
+        expect(Enum(42)).toEqual({
+            'ORIGINAL': 'ORIGINAL',
+        });
+
+        Enum.extend(R.equals(43), R.always(44));
+        Enum.extend(equals42, R.always(Enum('UPDATED')));
+        expect(Enum(42)).toEqual({
+            'UPDATED': 'UPDATED',
+        });
+    });
+
     it.skip('should not be able to override Enum values', () => {
         expect(Enum('ADD', 'REMOVE', 'CLEAR')).toNotBeEditable();
     });
