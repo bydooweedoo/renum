@@ -1,7 +1,7 @@
 {
   "name": "enum",
   "version": "1.0.0",
-  "description": "Immutable Enum without any dependencies.",
+  "description": "Simple enum using frozen object.",
   "main": "src/index.js",
   "config": {
     "reporter": "spec",

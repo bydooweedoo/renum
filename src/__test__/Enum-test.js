@@ -183,8 +183,4 @@ describe('Enum', () => {
         });
     });
 
-    it.skip('should not be able to override Enum values', () => {
-        expect(Enum('ADD', 'REMOVE', 'CLEAR')).toNotBeEditable();
-    });
-
 });

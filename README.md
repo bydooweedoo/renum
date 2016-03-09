@@ -43,17 +43,40 @@ renum(true, false, true) //=> {true: true, false: false}
 renum(null, undefined) //=> {}
 ```
 
-### From array
+### From Objects
+
+### Array
 
 ```js
 renum(['1', 2, true]) //=> {1: '1', 2: 2, true: true}
 ```
 
-## Extend
+### Pairs
+
+```js
+renum([
+  ['INCREMENT', n => n + 1],
+  ['DECREMENT', n => n - 1],
+]) //=> {INCREMENT: [Function], DECREMENT: [Function]}
+```
+
+### Map
+
+```js
+renum(new Map({INCREMENT: '+', DECREMENT: '-'})) //=> {INCREMENT: '+', DECREMENT: '-'}
+```
+
+### Inception
+
+```js
+renum(1, renum(2, renum(3))) //=> {1: 1, 2: 2, 3: 3}
+```
+
+## Extending renum
 
 In order to let you use `renum` with other libraries, you can implement your own translator.
 
-For example with `immutable`:
+Example with `immutable`:
 
 ```js
 // renum-immutable
@@ -72,8 +95,20 @@ And then:
 ```js
 import renum from 'renum';
 
+// from a list of pairs
 renum.extend(require('renum-immutable'));
+
+// or from arguments directly
+renum.extend(R.isEmpty, R.always({}));
 ```
+
+### Function signature
+
+`Predicate(value) : Function<Boolean>`
+
+`renum.extend(Predicate: Function, Transform: Function)`
+
+`renum.extend(ListOfPairs: Array<Predicate, Transform>)`
 
 ## Motivations
 
