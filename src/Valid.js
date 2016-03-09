@@ -19,7 +19,7 @@ const isCondition = R.both(
     )
 );
 
-const isOperator = R.both(
+const isPredicate = R.both(
     R.is(Function),
     R.pipe(
         R.prop('length'),
@@ -32,5 +32,5 @@ module.exports = {
     isPair,
     arePairs,
     isCondition,
-    isOperator,
+    isPredicate,
 };

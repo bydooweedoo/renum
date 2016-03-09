@@ -3,23 +3,17 @@
 const R = require('ramda');
 const Valid = require('./Valid');
 const debug = R.tap(console.log);
-const operators = new Map();
-const conditions = [[R.T, R.identity]];
+const store = [
+    [R.T, R.identity],
+];
+const predicates = require('./Predicates')(new Map());
+const conditions = require('./Conditions')(store);
 
-const appendCondition = R.invoker(3, 'splice')(-1, 0, R.__, conditions);
-const updateCondition = f => conditions[getOperator(f)] = f;
-const getConditionIndex = R.pipe(R.always(conditions), R.length, R.dec);
-
-const setOperator = R.invoker(2, 'set')(R.__, R.__, operators);
-const setOperatorValue = R.flip(setOperator);
-const hasOperator = R.invoker(1, 'has')(R.__, operators);
-const getOperator = R.pipe(R.head, R.invoker(1, 'get')(R.__, operators));
-
-const updateConditions = R.cond([
-    [R.pipe(R.head, hasOperator), R.tap(updateCondition)],
+const mergeConditions = R.cond([
+    [R.pipe(R.head, predicates.has), f => R.pipe(conditions.update(predicates.getPair(f), f))],
     [R.T, R.pipe(
-        R.tap(R.pipe(R.head, setOperatorValue(getConditionIndex()))),
-        R.tap(appendCondition)
+        R.tap(R.pipe(R.head, predicates.setValue(conditions.getIndex()))),
+        R.tap(conditions.append)
     )],
 ]);
 
@@ -28,10 +22,10 @@ const ExtendSingle = R.ifElse(
         R.pipe(R.length, R.equals(2)),
         R.both(
             R.pipe(R.head, Valid.isCondition),
-            R.pipe(R.last, Valid.isOperator)
+            R.pipe(R.last, Valid.isPredicate)
         )
     ),
-    updateConditions,
+    mergeConditions,
     R.F
 );
 
@@ -44,6 +38,6 @@ const Extend = R.unapply(R.ifElse(
     ExtendSingle
 ));
 
-Extend.conditions = conditions;
+Extend.conditions = store;
 
 module.exports = Extend;
