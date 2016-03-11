@@ -3,7 +3,6 @@
 import R from 'ramda';
 
 export default map => {
-
     const set = R.invoker(2, 'set')(R.__, R.__, map);
     const setValue = R.flip(set);
     const setPair = p => set(p[0], p[1]);
@@ -13,8 +12,8 @@ export default map => {
     const getPair = R.pipe(R.head, get);
 
     return {
-        'set': set,
-        'get': get,
+        set,
+        get,
         setValue,
         has,
         hasPair,

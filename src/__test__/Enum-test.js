@@ -21,37 +21,37 @@ describe('renum', () => {
 
     it('should handle Array Number values', () => {
         expect(renum([1, 2, 3])).toEqual({
-            '1': 1,
-            '2': 2,
-            '3': 3,
+            1: 1,
+            2: 2,
+            3: 3,
         });
     });
 
     it('should handle Array String values', () => {
         expect(renum(['one', 'two', 'three'])).toEqual({
-            'one': 'one',
-            'two': 'two',
-            'three': 'three',
+            one: 'one',
+            two: 'two',
+            three: 'three',
         });
     });
 
     it('should handle arguments String values', () => {
         expect(renum('one', 'two', 'three')).toEqual({
-            'one': 'one',
-            'two': 'two',
-            'three': 'three',
+            one: 'one',
+            two: 'two',
+            three: 'three',
         });
     });
 
     it('should handle Object values', () => {
         expect(renum({
-            '1': 1,
-            '2': 2,
-            '3': 3,
+            1: 1,
+            2: 2,
+            3: 3,
         })).toEqual({
-            '1': 1,
-            '2': 2,
-            '3': 3,
+            1: 1,
+            2: 2,
+            3: 3,
         });
     });
 
@@ -62,9 +62,9 @@ describe('renum', () => {
         map.set('2', 2);
         map.set('3', 3);
         expect(renum(map)).toEqual({
-            '1': 1,
-            '2': 2,
-            '3': 3,
+            1: 1,
+            2: 2,
+            3: 3,
         });
     });
 
@@ -75,9 +75,9 @@ describe('renum', () => {
         set.add(2);
         set.add(3);
         expect(renum(set)).toEqual({
-            '1': 1,
-            '2': 2,
-            '3': 3,
+            1: 1,
+            2: 2,
+            3: 3,
         });
     });
 
@@ -89,8 +89,8 @@ describe('renum', () => {
             ['TRUE', true],
             ['FALSE', false],
         ])).toEqual({
-            'TRUE': true,
-            'FALSE': false,
+            TRUE: true,
+            FALSE: false,
         });
         expect(renum([
             ['INCREMENT', inc],
@@ -103,17 +103,17 @@ describe('renum', () => {
 
     it('should handle String', () => {
         expect(renum('1 2 3')).toEqual({
-            '1': '1',
-            '2': '2',
-            '3': '3',
+            1: '1',
+            2: '2',
+            3: '3',
         });
     });
 
     it('should handle String with new line and spaces', () => {
         expect(renum('\n  \t1  \n 2\t\t3\n')).toEqual({
-            '1': '1',
-            '2': '2',
-            '3': '3',
+            1: '1',
+            2: '2',
+            3: '3',
         });
     });
 
@@ -123,35 +123,35 @@ describe('renum', () => {
             2
             3
         `)).toEqual({
-            '1': '1',
-            '2': '2',
-            '3': '3',
+            1: '1',
+            2: '2',
+            3: '3',
         });
     });
 
     it('should handle multiple Enum merge', () => {
         expect(renum(0, renum(1, 2), renum([3, 4, 5]))).toEqual({
-            '0': 0,
-            '1': 1,
-            '2': 2,
-            '3': 3,
-            '4': 4,
-            '5': 5
+            0: 0,
+            1: 1,
+            2: 2,
+            3: 3,
+            4: 4,
+            5: 5,
         });
     });
 
     it('should handle arguments Number values', () => {
         expect(renum(1, 2, 3)).toEqual({
-            '1': 1,
-            '2': 2,
-            '3': 3
+            1: 1,
+            2: 2,
+            3: 3,
         });
     });
 
     it('should handle arguments Boolean values', () => {
         expect(renum(true, false, true)).toEqual({
-            'true': true,
-            'false': false,
+            true: true,
+            false: false,
         });
     });
 
@@ -165,8 +165,8 @@ describe('renum', () => {
     it('should extend with given predicate and transform', () => {
         renum.extend(Immutable.List.isList, R.invoker(0, 'toArray'));
         expect(renum(Immutable.List.of(1, 2))).toEqual({
-            '1': 1,
-            '2': 2,
+            1: 1,
+            2: 2,
         });
     });
 
@@ -176,9 +176,9 @@ describe('renum', () => {
             [Immutable.Seq.isSeq, R.invoker(0, 'toObject')],
             [Immutable.Stack.isStack, R.invoker(0, 'toJS')],
         ]);
-        expect(renum(new Immutable.Map({ '1': 'one', '2': 'two', }))).toEqual({
-            '1': 'one',
-            '2': 'two',
+        expect(renum(new Immutable.Map({1: 'one', 2: 'two'}))).toEqual({
+            1: 'one',
+            2: 'two',
         });
     });
 
@@ -187,13 +187,13 @@ describe('renum', () => {
 
         renum.extend(equals42, R.always(renum('ORIGINAL')));
         expect(renum(42)).toEqual({
-            'ORIGINAL': 'ORIGINAL',
+            ORIGINAL: 'ORIGINAL',
         });
 
         renum.extend(R.equals(43), R.always(44));
         renum.extend(equals42, R.always(renum('UPDATED')));
         expect(renum(42)).toEqual({
-            'UPDATED': 'UPDATED',
+            UPDATED: 'UPDATED',
         });
     });
 

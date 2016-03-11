@@ -122,7 +122,7 @@ Example for [`immutable`](https://www.npmjs.com/package/immutable):
 import R from 'ramda';
 import Immutable from 'immutable';
 
-module.exports = [
+export default [
   [Immutable.List.isList, R.invoker(0, 'toArray')],
   [Immutable.Map.isMap, R.invoker(0, 'toObject')],
   [Immutable.Stack.isStack, R.invoker(0, 'toJS')],
@@ -134,13 +134,17 @@ And then:
 ```js
 import R from 'ramda';
 import renum from 'renum';
+import renumImmutable from './renum-immutable';
 
 // from a list of pairs
-renum.extend(require('./renum-immutable'));
+renum.extend(renumImmutable);
 
 // or from arguments directly
 renum.extend(R.isEmpty, R.always({}));
 ```
+
+Extend functions are called in priority first pass, then a second pass will be done with the default included predicates/transforms.
+It mean you actually can return another type rather than a `frozen Object`, and `renum` will convert it properly.
 
 ## Testing
 

@@ -2,7 +2,7 @@
 
 import R from 'ramda';
 
-export const KeyValue = (key, value) => R.assoc(
+export const fromKeyValue = (key, value) => R.assoc(
     R.ifElse(
         R.is(String),
         R.identity,
@@ -10,9 +10,9 @@ export const KeyValue = (key, value) => R.assoc(
     )(key), value
 );
 
-export const Single = value => KeyValue(value, value);
+export const fromSingle = value => fromKeyValue(value, value);
 
-export const Pair = pair => KeyValue(pair[0], pair[1]);
+export const fromPair = value => fromKeyValue(value[0], value[1]);
 
 export const boundWith = f => R.converge(R.call, [
     R.pipe(R.nthArg(1), f),

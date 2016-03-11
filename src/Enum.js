@@ -1,23 +1,21 @@
 'use strict';
 
 import R from 'ramda';
-import Extend from './Extend';
+import extend from './Extend';
 import { excludeEmpty } from './Utils';
 import { arePairs, isSingleArg } from './Valid';
-import { reduceWith, Single, Pair } from './Item';
-
-const debug = R.tap(console.log);
+import { reduceWith, fromSingle, fromPair } from './Item';
 
 const EnumFromObject = Object.freeze;
 
-const EnumFromArray = reduceWith(Single);
+const EnumFromArray = reduceWith(fromSingle);
 
-const EnumFromPairs = reduceWith(Pair);
+const EnumFromPairs = reduceWith(fromPair);
 
 const ApplyToObject = R.apply(R.__, R.of({}));
 
-const EnumSingle = R.pipe(
-    R.cond(Extend.conditions),
+const EnumSingle = conditions => R.pipe(
+    R.cond(conditions),
     R.cond([
         [R.isNil, R.always({})],
         [arePairs, EnumFromPairs],
@@ -32,10 +30,10 @@ const EnumSingle = R.pipe(
         [R.either(
             R.is(Number),
             R.is(Boolean)
-        ), R.pipe(Single, ApplyToObject)],
+        ), R.pipe(fromSingle, ApplyToObject)],
         [R.is(Symbol), R.pipe(
             R.invoker(0, 'toString'),
-            Single,
+            fromSingle,
             ApplyToObject
         )],
         [R.T, R.identity],
@@ -43,18 +41,20 @@ const EnumSingle = R.pipe(
 );
 
 /**
- * @param {...Object|...Array|...Map|...Set|...String|...Number|...Symbol|...Boolean} values Input arguments.
+ * @param {...Object|...Array|...Map|
+ *        ...Set|...String|...Number|
+ *        ...Symbol|...Boolean} values Input arguments.
  * @return {Object} Frozen object corresponding to given arguments.
  */
 const Enum = R.unapply(R.ifElse(
     isSingleArg,
     R.pipe(R.head, EnumSingle, EnumFromObject),
     R.pipe(R.reduce(R.converge(R.merge, [
-        R.pipe(R.nthArg(1), EnumSingle),
-        R.nthArg(0)
+        R.pipe(R.nthArg(1), R.pipe(extend.getConditions, EnumSingle)),
+        R.nthArg(0),
     ]), {}), EnumFromObject)
 ));
 
-Enum.extend = Extend;
+Enum.extend = extend;
 
 export default Enum;
