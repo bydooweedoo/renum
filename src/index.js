@@ -28,4 +28,4 @@ const MyEnum = Enum([
  * ```
  * _Note_: An error will be throw if you tried to modify the `Enum`.
  */
-module.exports = require('./Enum');
+export default require('./Enum');

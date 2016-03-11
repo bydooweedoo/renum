@@ -1,8 +1,8 @@
 'use strict';
 
-const R = require('ramda');
+import R from 'ramda';
 
-const KeyValue = (key, value) => R.assoc(
+export const KeyValue = (key, value) => R.assoc(
     R.ifElse(
         R.is(String),
         R.identity,
@@ -10,21 +10,13 @@ const KeyValue = (key, value) => R.assoc(
     )(key), value
 );
 
-const Value = value => KeyValue(value, value);
+export const Single = value => KeyValue(value, value);
 
-const Pair = pair => KeyValue(pair[0], pair[1]);
+export const Pair = pair => KeyValue(pair[0], pair[1]);
 
-const boundWith = f => R.converge(R.call, [
+export const boundWith = f => R.converge(R.call, [
     R.pipe(R.nthArg(1), f),
     R.nthArg(0),
 ]);
 
-const reduceWith = R.pipe(boundWith, R.flip(R.reduce)({}));
-
-module.exports = {
-    KeyValue,
-    Value,
-    Pair,
-    reduceWith,
-    boundWith,
-};
+export const reduceWith = R.pipe(boundWith, R.flip(R.reduce)({}));

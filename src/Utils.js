@@ -1,9 +1,5 @@
 'use strict';
 
-const R = require('ramda');
+import R from 'ramda';
 
-const excludeEmpty = R.filter(R.pipe(R.length, R.gte(R.__, 1)));
-
-module.exports = {
-    excludeEmpty,
-};
+export const excludeEmpty = R.filter(R.pipe(R.length, R.gte(R.__, 1)));

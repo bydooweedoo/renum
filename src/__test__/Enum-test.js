@@ -1,9 +1,9 @@
 'use strict';
 
-const R = require('ramda');
-const expect = require('expect');
-const renum = require('..');
-const Immutable = require('immutable');
+import R from 'ramda';
+import Immutable from 'immutable';
+import expect from 'expect';
+import renum from '..';
 
 describe('renum', () => {
 

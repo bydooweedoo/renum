@@ -1,8 +1,8 @@
 'use strict';
 
-const R = require('ramda');
+import R from 'ramda';
 
-module.exports = conditions => {
+export default conditions => {
 
     const append = R.invoker(3, 'splice')(-1, 0, R.__, conditions);
     const update = R.curry((key, f) => conditions[key] = f);
@@ -12,5 +12,5 @@ module.exports = conditions => {
         append,
         update,
         getIndex,
-    };
-};
+    }
+}

@@ -1,8 +1,8 @@
 'use strict';
 
-const expect = require('expect');
-const Predicates = require('../Predicates');
-const expectEnum = require('expect-enum');
+import expect from 'expect';
+import Predicates from '../Predicates';
+import expectEnum from 'expect-enum';
 
 expect.extend(expectEnum);
 

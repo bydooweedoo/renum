@@ -1,8 +1,8 @@
 'use strict';
 
-const R = require('ramda');
+import R from 'ramda';
 
-module.exports = map => {
+export default map => {
 
     const set = R.invoker(2, 'set')(R.__, R.__, map);
     const setValue = R.flip(set);

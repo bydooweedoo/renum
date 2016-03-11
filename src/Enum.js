@@ -1,17 +1,18 @@
 'use strict';
 
-const R = require('ramda');
-const Utils = require('./Utils');
-const Valid = require('./Valid');
-const Item = require('./Item');
-const Extend = require('./Extend');
+import R from 'ramda';
+import Extend from './Extend';
+import { excludeEmpty } from './Utils';
+import { arePairs, isSingleArg } from './Valid';
+import { reduceWith, Single, Pair } from './Item';
+
 const debug = R.tap(console.log);
 
 const EnumFromObject = Object.freeze;
 
-const EnumFromArray = Item.reduceWith(Item.Value);
+const EnumFromArray = reduceWith(Single);
 
-const EnumFromPairs = Item.reduceWith(Item.Pair);
+const EnumFromPairs = reduceWith(Pair);
 
 const ApplyToObject = R.apply(R.__, R.of({}));
 
@@ -19,22 +20,22 @@ const EnumSingle = R.pipe(
     R.cond(Extend.conditions),
     R.cond([
         [R.isNil, R.always({})],
-        [Valid.arePairs, EnumFromPairs],
+        [arePairs, EnumFromPairs],
         [R.is(Array), EnumFromArray],
         [R.is(Map), R.pipe(Array.from, EnumFromPairs)],
         [R.is(Set), R.pipe(Array.from, EnumFromArray)],
         [R.is(String), R.pipe(
             R.split(/[\s]+/ig),
-            Utils.excludeEmpty,
+            excludeEmpty,
             EnumFromArray
         )],
         [R.either(
             R.is(Number),
             R.is(Boolean)
-        ), R.pipe(Item.Value, ApplyToObject)],
+        ), R.pipe(Single, ApplyToObject)],
         [R.is(Symbol), R.pipe(
             R.invoker(0, 'toString'),
-            Item.Value,
+            Single,
             ApplyToObject
         )],
         [R.T, R.identity],
@@ -42,11 +43,11 @@ const EnumSingle = R.pipe(
 );
 
 /**
- * @param {Object|Array|Map|Set|...String} values Input arguments.
+ * @param {...Object|...Array|...Map|...Set|...String|...Number|...Symbol|...Boolean} values Input arguments.
  * @return {Object} Frozen object corresponding to given arguments.
  */
 const Enum = R.unapply(R.ifElse(
-    Valid.isSingleArg,
+    isSingleArg,
     R.pipe(R.head, EnumSingle, EnumFromObject),
     R.pipe(R.reduce(R.converge(R.merge, [
         R.pipe(R.nthArg(1), EnumSingle),
@@ -56,4 +57,4 @@ const Enum = R.unapply(R.ifElse(
 
 Enum.extend = Extend;
 
-module.exports = Enum;
+export default Enum;

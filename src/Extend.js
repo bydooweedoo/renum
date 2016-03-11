@@ -1,12 +1,15 @@
 'use strict';
 
-const R = require('ramda');
-const Valid = require('./Valid');
+import R from 'ramda';
+import * as Valid from './Valid';
+import Predicates from './Predicates';
+import Conditions from './Conditions';
+
 const store = [
     [R.T, R.identity],
 ];
-const predicates = require('./Predicates')(new Map());
-const conditions = require('./Conditions')(store);
+const predicates = Predicates(new Map());
+const conditions = Conditions(store);
 
 const mergeConditions = R.cond([
     [predicates.hasPair, f => R.pipe(conditions.update(predicates.getPair(f), f))],
@@ -39,4 +42,4 @@ const Extend = R.unapply(R.ifElse(
 
 Extend.conditions = store;
 
-module.exports = Extend;
+export default Extend;

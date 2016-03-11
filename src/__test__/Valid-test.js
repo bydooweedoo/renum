@@ -1,8 +1,8 @@
 'use strict';
 
-const R = require('ramda');
-const expect = require('expect');
-const Valid = require('../Valid');
+import R from 'ramda';
+import expect from 'expect';
+import * as Valid from '../Valid';
 
 describe('Valid', () => {
 

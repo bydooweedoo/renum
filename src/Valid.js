@@ -1,15 +1,15 @@
 'use strict';
 
-const R = require('ramda');
+import R from 'ramda';
 
-const isSingleArg = R.pipe(R.length, R.equals(1));
+export const isSingleArg = R.pipe(R.length, R.equals(1));
 
-const isPair = R.both(
+export const isPair = R.both(
     R.is(Array),
     R.pipe(R.length, R.equals(2))
 );
 
-const arePairs = R.both(
+export const arePairs = R.both(
     R.is(Array),
     R.pipe(
         R.reject(isPair),
@@ -18,7 +18,7 @@ const arePairs = R.both(
     )
 );
 
-const isPredicate = R.both(
+export const isPredicate = R.both(
     R.is(Function),
     R.pipe(
         R.prop('length'),
@@ -26,18 +26,10 @@ const isPredicate = R.both(
     )
 );
 
-const isTransform = R.both(
+export const isTransform = R.both(
     R.is(Function),
     R.pipe(
         R.prop('length'),
         R.gte(R.__, 0)
     )
 );
-
-module.exports = {
-    isSingleArg,
-    isPair,
-    arePairs,
-    isPredicate,
-    isTransform,
-};
