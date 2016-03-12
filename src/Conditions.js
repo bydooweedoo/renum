@@ -3,14 +3,21 @@
 import R from 'ramda';
 
 export default (getter, setter) => {
-    const insertAt = (at, value) => R.insert(at, value, getter());
-    const append = R.pipe(getter, R.length, R.dec, R.insert(R.__, R.__, getter), setter);//R.invoker(3, 'splice')(-1, 0, R.__, state);
-    const update = () => R.pipe(R.update(R.__, R.__, getter()), setter)();
-    const getIndex = () => R.pipe(getter, R.length, R.dec)();
+    const getBeforeEndIndex = R.pipe(getter, R.length, R.dec);
+    const append = R.pipe(
+        pair => [getBeforeEndIndex(), pair, getter()],
+        R.apply(R.insert),
+        setter
+    );
+    const update = R.pipe(
+        (index, pair) => [index, pair, getter()],
+        R.apply(R.update),
+        setter
+    );
 
     return {
         append,
         update,
-        getIndex
+        getBeforeEndIndex,
     };
 };

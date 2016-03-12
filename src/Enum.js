@@ -1,10 +1,12 @@
 'use strict';
 
 import R from 'ramda';
-import extend from './Extend';
+import _extend from './Extend';
 import { excludeEmpty } from './Utils';
 import { arePairs, isSingleArg } from './Valid';
 import { reduceWith, fromSingle, fromPair } from './Item';
+
+const debug = R.tap(console.log);
 
 const EnumFromObject = Object.freeze;
 
@@ -14,8 +16,12 @@ const EnumFromPairs = reduceWith(fromPair);
 
 const ApplyToObject = R.apply(R.__, R.of({}));
 
-const EnumSingle = conditions => R.pipe(
-    R.cond(conditions),
+const extend = _extend([[R.T, R.identity]]);
+
+const getCustomConditions = arg => R.cond(extend.getConditions())(arg);
+
+const EnumSingle = R.pipe(
+    R.pipe(getCustomConditions),
     R.cond([
         [R.isNil, R.always({})],
         [arePairs, EnumFromPairs],
@@ -50,7 +56,7 @@ const Enum = R.unapply(R.ifElse(
     isSingleArg,
     R.pipe(R.head, EnumSingle, EnumFromObject),
     R.pipe(R.reduce(R.converge(R.merge, [
-        R.pipe(R.nthArg(1), R.pipe(extend.getConditions, EnumSingle)),
+        R.pipe(R.nthArg(1), EnumSingle),
         R.nthArg(0),
     ]), {}), EnumFromObject)
 ));

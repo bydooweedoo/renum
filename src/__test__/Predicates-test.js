@@ -1,5 +1,6 @@
 'use strict';
 
+import R from 'ramda';
 import expect from 'expect';
 import Predicates from '../Predicates';
 import expectEnum from 'expect-enum';
@@ -51,8 +52,10 @@ describe('Predicates', () => {
         });
 
         it('should has existing key', () => {
-            map.set('HAS', 'YES');
-            expect(predicates.has('HAS')).toBe(true);
+            const equalsOne = R.equals(1);
+
+            map.set(equalsOne, 'YES');
+            expect(predicates.has(equalsOne)).toBe(true);
         });
 
         it('should not has unknown key', () => {
