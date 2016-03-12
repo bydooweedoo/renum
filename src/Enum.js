@@ -53,7 +53,7 @@ const enumSingle = R.pipe(
 const Enum = R.unapply(R.ifElse(
     isSingleArg,
     R.pipe(R.head, enumSingle, enumFromObject),
-    R.pipe(R.reduce(R.converge(R.merge, [
+    R.pipe(R.reduceRight(R.converge(R.merge, [
         R.pipe(R.nthArg(1), enumSingle),
         R.nthArg(0),
     ]), {}), enumFromObject)

@@ -197,4 +197,34 @@ describe('renum', () => {
         });
     });
 
+    it('should keep rightmost value when encounters duplicate keys in different arguments', () => {
+        expect(renum(1, {
+            1: 'one',
+            2: 2,
+            3: 3,
+        }, [
+            [1, 'ONE'],
+            [3, '3'],
+        ])).toEqual({
+            1: 'ONE',
+            2: 2,
+            3: '3',
+        });
+    });
+
+    it('should keep rightmost value when encounters duplicate keys in same argument', () => {
+        expect(renum([
+            [1, 1],
+            [1, 'one'],
+            [2, 2],
+            [3, 3],
+            [1, 'ONE'],
+            [3, '3'],
+        ])).toEqual({
+            1: 'ONE',
+            2: 2,
+            3: '3',
+        });
+    });
+
 });

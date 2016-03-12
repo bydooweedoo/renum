@@ -10,8 +10,9 @@ declare module renum {
      *
      *      const predicate = value => value instanceof Error;
      *
-     * Note: For keyed/valued pair or complex type, the complete entry is passed
-     * to the `Predicate`.
+     * Note (1): For keyed/valued pair or complex type, the complete entry is passed
+     * to `Predicate`.
+     * Note (2): An `Array` of different value types is not concidered valid.
      */
     export type Predicate = (value: any) => boolean;
 
@@ -22,15 +23,16 @@ declare module renum {
      *      const format = error => ({[error.name]: error.message});
      *
      * Note (1): For keyed/valued pair or complex type, the complete entry is passed
-     * to the `Format`.
-     * Note (2): Concerning multiple input values like `Array` of a `class`, you can either return
+     * to `Format`.
+     * Note (2): Concerning multiple input values like `Array` of a specific `class`, you can either return
      * an `Object`, `Map`, `Set`, or even an `Array` of `Pair`. Because `renum` will call the
      * low priority conditions (default ones) with the output of high priority ones.
+     * Note (3): An `Array` of different value types is not concidered valid.
      */
     export type Format = (value: any) => any;
 
     /**
-     * Frozen object returned by `renum`.
+     * Frozen `Object` returned by `renum`.
      */
     export interface Enum <key, value> {
         key: string;
@@ -94,6 +96,23 @@ declare module renum {
      */
     export function extend(conditions: Array<Condition>): Array<Condition>;
 
+    /**
+     * Create a new immutable `Enum`.
+     *
+     *      import renum from 'renum';
+     *
+     *      export default renum(
+     *          'INCREMENT',
+     *          'DECREMENT',
+     *      ); //=> {INCREMENT: 'INCREMENT', DECREMENT: 'DECREMENT'}
+     *
+     * When `renum` encounters duplicate key, the rightmost value will remain.
+     *
+     * Note: For now, single `Array` of multiple value types are not concidered valid.
+     * Meanwhile, you can use different arguments types like:
+     *
+     *      renum('one', true, [1, 2, 3]); //=> {one: 'one', true: true, 1: 1, 2: 2, 3: 3}
+     */
     export default function(): Enum<string, any>;
     export default function(value: any): Enum<string, any>;
     export default function(...values: Array<any>) : Enum<string, any>;
