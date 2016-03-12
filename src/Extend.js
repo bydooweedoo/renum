@@ -5,8 +5,6 @@ import { isPredicate, isTransform, isSingleArg, arePairs } from './Valid';
 import _predicates from './Predicates';
 import _conditions from './Conditions';
 
-const debug = R.tap(console.log);
-
 export default defaultConditions => {
     const predicates = _predicates(new Map());
     let conds = R.ifElse(

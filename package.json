@@ -13,7 +13,7 @@
     "reporter": "spec",
     "source_files": "package.json src/index.js src/*.js",
     "test_files": "src/__test__/*-test.js",
-    "bench_files": "src/__bench__/*-bench.js"
+    "bench_files": "lib/__bench__/*-bench.js"
   },
   "scripts": {
     "env": "env",
@@ -21,7 +21,7 @@
     "matcha": "matcha",
     "jsdoc2md": "jsdoc2md",
     "lint": "eslint src/*.js",
-    "bench": "matcha $npm_package_config_bench_files",
+    "bench": "npm run build:commonjs && matcha $npm_package_config_bench_files",
     "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-register $npm_package_config_test_files --reporter $npm_package_config_reporter",
     "docs": "jsdoc2md --verbose --conf docs/jsdoc.json -t docs/README.hbs $npm_package_config_source_files > README.md; echo",
     "coverage": "istanbul cover _mocha -- $npm_package_config_test_files --reporter $npm_package_config_reporter",

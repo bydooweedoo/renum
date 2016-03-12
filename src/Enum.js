@@ -6,41 +6,39 @@ import { excludeEmpty } from './Utils';
 import { arePairs, isSingleArg } from './Valid';
 import { reduceWith, fromSingle, fromPair } from './Item';
 
-const debug = R.tap(console.log);
+const enumFromObject = Object.freeze;
 
-const EnumFromObject = Object.freeze;
+const enumFromArray = reduceWith(fromSingle);
 
-const EnumFromArray = reduceWith(fromSingle);
+const enumFromPairs = reduceWith(fromPair);
 
-const EnumFromPairs = reduceWith(fromPair);
-
-const ApplyToObject = R.apply(R.__, R.of({}));
+const applyToObject = R.apply(R.__, R.of({}));
 
 const extend = _extend([[R.T, R.identity]]);
 
 const getCustomConditions = arg => R.cond(extend.getConditions())(arg);
 
-const EnumSingle = R.pipe(
+const enumSingle = R.pipe(
     R.pipe(getCustomConditions),
     R.cond([
         [R.isNil, R.always({})],
-        [arePairs, EnumFromPairs],
-        [R.is(Array), EnumFromArray],
-        [R.is(Map), R.pipe(Array.from, EnumFromPairs)],
-        [R.is(Set), R.pipe(Array.from, EnumFromArray)],
+        [arePairs, enumFromPairs],
+        [R.is(Array), enumFromArray],
+        [R.is(Map), R.pipe(Array.from, enumFromPairs)],
+        [R.is(Set), R.pipe(Array.from, enumFromArray)],
         [R.is(String), R.pipe(
             R.split(/[\s]+/ig),
             excludeEmpty,
-            EnumFromArray
+            enumFromArray
         )],
         [R.either(
             R.is(Number),
             R.is(Boolean)
-        ), R.pipe(fromSingle, ApplyToObject)],
+        ), R.pipe(fromSingle, applyToObject)],
         [R.is(Symbol), R.pipe(
             R.invoker(0, 'toString'),
             fromSingle,
-            ApplyToObject
+            applyToObject
         )],
         [R.T, R.identity],
     ])
@@ -54,11 +52,11 @@ const EnumSingle = R.pipe(
  */
 const Enum = R.unapply(R.ifElse(
     isSingleArg,
-    R.pipe(R.head, EnumSingle, EnumFromObject),
+    R.pipe(R.head, enumSingle, enumFromObject),
     R.pipe(R.reduce(R.converge(R.merge, [
-        R.pipe(R.nthArg(1), EnumSingle),
+        R.pipe(R.nthArg(1), enumSingle),
         R.nthArg(0),
-    ]), {}), EnumFromObject)
+    ]), {}), enumFromObject)
 ));
 
 Enum.extend = extend;

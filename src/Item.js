@@ -1,21 +1,19 @@
 'use strict';
 
 import R from 'ramda';
+import { duplicate, stringify } from './Utils';
 
-export const fromKeyValue = (key, value) => R.assoc(
-    R.ifElse(
-        R.is(String),
-        R.identity,
-        String
-    )(key), value
-);
+export const fromKeyValue = R.converge(R.assoc, [
+    R.pipe(R.nthArg(0), stringify),
+    R.nthArg(1),
+]);
 
-export const fromSingle = value => fromKeyValue(value, value);
+export const fromPair = R.apply(fromKeyValue);
 
-export const fromPair = value => fromKeyValue(value[0], value[1]);
+export const fromSingle = R.pipe(duplicate, fromPair);
 
-export const boundWith = f => R.converge(R.call, [
-    R.pipe(R.nthArg(1), f),
+export const boundWith = func => R.converge(R.call, [
+    R.pipe(R.nthArg(1), func),
     R.nthArg(0),
 ]);
 

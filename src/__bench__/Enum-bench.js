@@ -1,6 +1,6 @@
 'use strict';
 
-const renum = require('..');
+import renum from '..';
 
 suite('renum #Array', () => {
     bench('EMPTY', () => {
