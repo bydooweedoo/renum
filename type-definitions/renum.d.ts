@@ -4,19 +4,28 @@
 declare module renum {
 
     /**
-     * The predicate pure function used to check given value.
-     * If value type matches (`Predicate` returns true),
-     * then it will call the associated `Format`.
+     * The predicate pure function is used to check given value type.
+     * If type matches (`Predicate` returns true),
+     * then it will call the associated `Format` with the same value.
      *
-     * Note: For keyed/valued pair, only the `value` is passed.
+     *      const predicate = value => value instanceof Error;
+     *
+     * Note: For keyed/valued pair or complex type, the complete entry is passed
+     * to the `Predicate`.
      */
     export type Predicate = (value: any) => boolean;
 
     /**
-     * The format pure function for converting given value to any type that
+     * The format pure function is used to convert given value to any type that
      * fit `Enum` input or to directly `Enum` output (frozen object).
      *
-     * Note: For keyed/valued pair, only the `value` is passed.
+     *      const format = error => ({[error.name]: error.message});
+     *
+     * Note (1): For keyed/valued pair or complex type, the complete entry is passed
+     * to the `Format`.
+     * Note (2): Concerning multiple input values like `Array` of a `class`, you can either return
+     * an `Object`, `Map`, `Set`, or even an `Array` of `Pair`. Because `renum` will call the
+     * low priority conditions (default ones) with the output of high priority ones.
      */
     export type Format = (value: any) => any;
 
