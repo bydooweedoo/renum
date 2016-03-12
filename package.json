@@ -7,7 +7,8 @@
   "files": [
     "es",
     "lib",
-    "src"
+    "src",
+    "type-definitions"
   ],
   "config": {
     "reporter": "spec",

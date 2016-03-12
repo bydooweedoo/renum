@@ -19,6 +19,10 @@ describe('renum', () => {
         expect(renum(null)).toEqual({});
     });
 
+    it('should handle no arguments', () => {
+        expect(renum()).toEqual({});
+    });
+
     it('should handle Array Number values', () => {
         expect(renum([1, 2, 3])).toEqual({
             1: 1,
@@ -224,6 +228,14 @@ describe('renum', () => {
             1: 'ONE',
             2: 2,
             3: '3',
+        });
+    });
+
+    it('should treat Array of multiple types as a regular Array', () => {
+        expect(renum([[1, '1'], 2, 3])).toEqual({
+            '1,1': [1, '1'],
+            2: 2,
+            3: 3,
         });
     });
 

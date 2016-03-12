@@ -146,6 +146,17 @@ renum.extend(R.isEmpty, R.always({}));
 Extend functions are called in priority first pass, then a second pass will be done with the default included predicates/transforms.
 It mean you actually can return another type rather than a `frozen Object`, and `renum` will convert it properly.
 
+## Typescript
+
+`renum` [Typescript](http://typescriptlang.org) type declarations are available, you just need to add a reference:
+
+```js
+///<reference path='./node_modules/renum/type-definitions/renum.d.ts'/>
+```
+
+You can also read this [file](./type-definitions/renum.d.ts) in order to better understand
+how `renum` works.
+
 ## Testing
 
 ```shell
