@@ -108,7 +108,7 @@ declare module renum {
      *
      * When `renum` encounters duplicate key, the rightmost value will remain.
      *
-     * Note: For now, single `Array` of multiple value types are treated as regular Array.
+     * Note: For now, single `Array` of multiple value types are treated as regular `Array`.
      * This is mainly due to this case:
      *
      *      renum([[1, 'ONE'], 2, 'three']); //=> {'1,ONE': [1, 'ONE'], 2: 2, three: 'three'}
