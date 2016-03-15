@@ -120,13 +120,14 @@ declare module renum {
      *      renum([[1, 'ONE']], 2, 'three'); //=> {1: 'ONE', 2: 2, three: 'three'}
      */
     export default function(): Enum<string, any>;
-    export default function(value: any, ...values: any[]): Enum<string, any>;
-    export default function(value: Enum<string, any>, ...values: any[]): Enum<string, any>;
-    export default function(value: Pair, ...values: any[]): Enum<string, any>;
-    export default function(value: string, ...values: any[]): Enum<string, string>;
-    export default function(value: number, ...values: any[]): Enum<string, number>;
-    export default function(value: boolean, ...values: any[]): Enum<string, boolean>;
-    export default function(value: symbol, ...values: any[]): Enum<string, symbol>;
-    export default function(value: Map<any, any>, ...values: any[]): Enum<string, any>;
-    export default function(value: Set<any, any>, ...values: any[]): Enum<string, any>;
+    export default function(value: any): Enum<string, any>;
+    export default function(...values: any[]): Enum<string, any>;
+    export default function(value: Enum<string, any>): Enum<string, any>;
+    export default function(value: Pair): Enum<string, any>;
+    export default function(value: string): Enum<string, string>;
+    export default function(value: number): Enum<string, number>;
+    export default function(value: boolean): Enum<string, boolean>;
+    export default function(value: symbol): Enum<string, symbol>;
+    export default function(value: Map<any, any>): Enum<string, any>;
+    export default function(value: Set<any, any>): Enum<string, any>;
 }

@@ -1,4 +1,10 @@
-# renum
+# renum [![npm package][npm-badge]][npm]
+
+[build-badge]: https://img.shields.io/travis/bydooweedoo/renum/master.svg?style=flat-square
+[build]: https://travis-ci.org/bydooweedoo/renum
+
+[npm-badge]: https://img.shields.io/npm/v/renum.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/renum
 
 `renum` is a small library to create frozen objects in javascript from multiple sources.
 

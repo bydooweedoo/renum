@@ -20,11 +20,9 @@
     "env": "env",
     "mocha": "mocha",
     "matcha": "matcha",
-    "jsdoc2md": "jsdoc2md",
     "lint": "eslint src/*.js",
     "bench": "npm run build:commonjs && matcha $npm_package_config_bench_files",
     "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-register $npm_package_config_test_files --reporter $npm_package_config_reporter",
-    "docs": "jsdoc2md --verbose --conf docs/jsdoc.json -t docs/README.hbs $npm_package_config_source_files > README.md; echo",
     "coverage": "cross-env BABEL_ENV=commonjs babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- $npm_package_config_test_files --reporter $npm_package_config_reporter",
     "build": "npm run build:es && npm run build:commonjs",
     "build:es": "cross-env BABEL_ENV=es babel src -d es",
@@ -35,7 +33,6 @@
     "watch:coverage": "nodemon $npm_package_config_test_files $npm_package_config_source_files --delay 2500ms -x 'npm run coverage'",
     "watch:lint": "nodemon src/*.js -x 'eslint'"
   },
-  "private": true,
   "keywords": [
     "enum",
     "constants",
@@ -44,8 +41,8 @@
     "ramda",
     "redux"
   ],
-  "author": "bydooweedoo <bydooweedoo@gmail.com>",
-  "license": "PRIVATE",
+  "author": "Rémi Marek <bydooweedoo@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "ramda": "^0.19.1"
   },
