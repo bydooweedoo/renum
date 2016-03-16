@@ -3,9 +3,9 @@
 import R from 'ramda';
 import expect from 'expect';
 import _extend from '../Extend';
-import expectEnum from 'expect-enum';
+import expectRenum from 'expect-renum';
 
-expect.extend(expectEnum);
+expect.extend(expectRenum);
 
 describe('extend', () => {
 

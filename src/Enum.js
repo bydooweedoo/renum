@@ -6,7 +6,11 @@ import { excludeEmpty } from './Utils';
 import { arePairs, isSingleArg } from './Valid';
 import { reduceWith, fromSingle, fromPair } from './Item';
 
-const enumFromObject = Object.freeze;
+const enumFromObject = R.ifElse(
+    Object.isFrozen,
+    R.identity,
+    Object.freeze
+);
 
 const enumFromArray = reduceWith(fromSingle);
 

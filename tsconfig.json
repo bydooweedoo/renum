@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "typescript",
+        "moduleResolution": "node"
+    },
+    "filesGlob": [
+        "./**/*.ts"
+    ],
+    "files": [
+        "./type-definitions/__test__/renum.ts",
+        "./type-definitions/renum.d.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}
