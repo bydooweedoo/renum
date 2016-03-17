@@ -1,5 +1,3 @@
-'use strict';
-
 import R from 'ramda';
 
 /**
@@ -21,7 +19,7 @@ export const excludeEmpty = R.pipe(
 /**
  * Duplicate given value and return the result in an Array.
  *
- * 		Utils.duplicate(1) //=> [1, 1]
+ *      Utils.duplicate(1) //=> [1, 1]
  */
 export const duplicate = R.flip(R.repeat)(2);
 
@@ -29,7 +27,7 @@ export const duplicate = R.flip(R.repeat)(2);
  * Transform given value to string.
  * Returns given value if already string.
  *
- * 		Utils.stringify(1) //=> "1"
+ *      Utils.stringify(1) //=> "1"
  */
 export const stringify = R.ifElse(
     R.is(String),

@@ -1,5 +1,3 @@
-'use strict';
-
 import R from 'ramda';
 import { isPredicate, isTransform, isSingleArg, arePairs } from './Valid';
 import _predicates from './Predicates';
