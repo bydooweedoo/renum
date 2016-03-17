@@ -3,8 +3,8 @@
 [build-badge]: https://img.shields.io/travis/bydooweedoo/renum/master.svg?style=flat-square
 [build]: https://travis-ci.org/bydooweedoo/renum
 
-[coverage-badge]: https://img.shields.io/coveralls/bydooweedoo/renum.svg?style=flat-square
-[coverage]: https://coveralls.io/github/bydooweedoo/renum
+[coverage-badge]: https://img.shields.io/codecov/c/github/bydooweedoo/renum.svg?style=flat-square
+[coverage]: https://codecov.io/github/bydooweedoo
 
 [npm-badge]: https://img.shields.io/npm/v/renum.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/renum

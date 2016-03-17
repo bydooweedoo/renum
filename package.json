@@ -45,10 +45,7 @@
   ],
   "author": "Rémi Marek <bydooweedoo@gmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bydooweedoo/renum.git"
-  },
+  "repository": "bydooweedoo/renum",
   "dependencies": {
     "ramda": "^0.19.1"
   },
