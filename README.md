@@ -1,4 +1,4 @@
-# renum [![npm package][npm-badge]][npm]
+# renum [![npm package][npm-badge]][npm] [![Travis][build-badge]][build]
 
 [build-badge]: https://img.shields.io/travis/bydooweedoo/renum/master.svg?style=flat-square
 [build]: https://travis-ci.org/bydooweedoo/renum
