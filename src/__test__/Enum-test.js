@@ -239,4 +239,47 @@ describe('renum', () => {
         });
     });
 
+    describe('#fromPair', () => {
+
+        it('should return corresponding enum from given pair', () => {
+            expect(renum.fromPair([1, 2])).toEqual({1: 2});
+            expect(renum.fromPair([2, 3])).toEqual({2: 3});
+        });
+
+        it('should return given value if not a pair', () => {
+            expect(renum.fromPair(true)).toEqual(true);
+            expect(renum.fromPair(null)).toEqual(null);
+            expect(renum.fromPair([1, 2, 3])).toEqual([1, 2, 3]);
+        });
+
+    });
+
+    describe('#fromPairs', () => {
+
+        it('should return corresponding enum from given pairs', () => {
+            expect(renum.fromPairs([[1, 2], [2, 3]])).toEqual({1: 2, 2: 3});
+        });
+
+        it('should return given value if not pairs', () => {
+            expect(renum.fromPairs(true)).toEqual(true);
+            expect(renum.fromPairs(null)).toEqual(null);
+            expect(renum.fromPairs([1, 2, 3])).toEqual([1, 2, 3]);
+        });
+
+    });
+
+    describe('#fromArray', () => {
+
+        it('should return corresponding enum from given values', () => {
+            expect(renum.fromArray([1, 2, 3])).toEqual({1: 1, 2: 2, 3: 3});
+        });
+
+        it('should return given value if not Array', () => {
+            expect(renum.fromArray(true)).toEqual(true);
+            expect(renum.fromArray(null)).toEqual(null);
+            expect(renum.fromArray({})).toEqual({});
+        });
+
+    });
+
 });

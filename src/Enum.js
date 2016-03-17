@@ -1,9 +1,7 @@
-'use strict';
-
 import R from 'ramda';
 import _extend from './Extend';
 import { excludeEmpty } from './Utils';
-import { arePairs, isSingleArg } from './Valid';
+import { isPair, arePairs, isSingleArg } from './Valid';
 import { reduceWith, fromSingle, fromPair } from './Item';
 
 const enumFromObject = R.ifElse(
@@ -63,6 +61,28 @@ const Enum = R.unapply(R.ifElse(
     ]), {}), enumFromObject)
 ));
 
+const callWithEmptyObject = R.flip(R.call)({});
+
 Enum.extend = extend;
+Enum.fromPair = R.ifElse(
+    isPair,
+    R.pipe(fromPair, callWithEmptyObject, enumFromObject),
+    R.identity
+);
+Enum.fromPairs = R.ifElse(
+    arePairs,
+    R.pipe(enumFromPairs, enumFromObject),
+    R.identity
+);
+Enum.fromArray = R.ifElse(
+    R.is(Array),
+    R.pipe(enumFromArray, enumFromObject),
+    R.identity
+);
+Enum.fromObject = R.ifElse(
+    R.is(Object),
+    enumFromObject,
+    R.identity
+);
 
 export default Enum;
