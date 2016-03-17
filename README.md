@@ -169,6 +169,12 @@ how `renum` works.
 npm test
 ```
 
+## Benchmark
+
+```shell
+npm run bench
+```
+
 ## Motivations
 
  * Firstly designed to create immutable `action types` from [`redux`](https://www.npmjs.com/package/redux) based projects and easily be able to merge each other.
