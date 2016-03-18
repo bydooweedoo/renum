@@ -1,5 +1,3 @@
-'use strict';
-
 import R from 'ramda';
 import _extend from './Extend';
 import { excludeEmpty } from './Utils';

@@ -34,7 +34,7 @@ export const isPair = R.both(
 export const arePairs = R.both(
     R.is(Array),
     R.pipe(
-      R.reject(isPair),
+        R.reject(isPair),
         R.length,
         R.equals(0)
     )
