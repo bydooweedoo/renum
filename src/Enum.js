@@ -20,6 +20,9 @@ const extend = _extend([[R.T, R.identity]]);
 
 const getCustomConditions = arg => R.cond(extend.getConditions())(arg);
 
+// fix for node <= 0.12
+const isSymbol = value => typeof value === 'symbol';
+
 const enumSingle = R.pipe(
     R.pipe(getCustomConditions),
     R.cond([
@@ -37,7 +40,10 @@ const enumSingle = R.pipe(
             R.is(Number),
             R.is(Boolean)
         ), R.pipe(fromSingle, applyToObject)],
-        [R.is(Symbol), R.pipe(
+        [R.either(
+            isSymbol,
+            R.is(Symbol)
+        ), R.pipe(
             R.invoker(0, 'toString'),
             fromSingle,
             applyToObject

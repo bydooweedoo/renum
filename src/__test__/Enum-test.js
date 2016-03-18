@@ -1,5 +1,3 @@
-'use strict';
-
 import R from 'ramda';
 import Immutable from 'immutable';
 import expect from 'expect';
@@ -159,10 +157,16 @@ describe('renum', () => {
         });
     });
 
+    // fix for node <= 0.10
     it('should handle arguments Symbol values', () => {
-        expect(renum(Symbol('1'), Symbol('2'))).toEqual({
-            'Symbol(1)': 'Symbol(1)',
-            'Symbol(2)': 'Symbol(2)',
+        const symbol1 = Symbol('1');
+        const symbol2 = Symbol('2');
+        const string1 = symbol1.toString();
+        const string2 = symbol2.toString();
+
+        expect(renum(symbol1, symbol2)).toEqual({
+            [string1]: string1,
+            [string2]: string2,
         });
     });
 
