@@ -19,22 +19,24 @@
     "reporter": "spec",
     "source_files": "package.json src/index.js src/*.js",
     "test_files": "src/__test__/*-test.js",
+    "test_lib_files": "lib/__test__/*-test.js",
     "bench_files": "lib/__bench__/*-bench.js"
   },
   "scripts": {
+    "prepublish": "npm run test && npm run build",
     "lint": "eslint src/*.js",
     "bench": "npm run build:commonjs && node $npm_package_config_bench_files",
     "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-register $npm_package_config_test_files --reporter $npm_package_config_reporter",
-    "test:ci": "nyc --reporter=lcov npm run test:lib",
-    "test:lib": "mocha lib/__test__/*-test.js --reporter $npm_package_config_reporter",
+    "test:commonjs": "mocha $npm_package_config_test_lib_files --reporter $npm_package_config_reporter",
+    "test:ci": "nyc --reporter=lcov --reporter=text -- cross-env BABEL_ENV=commonjs mocha --compilers js:babel-register $npm_package_config_test_files --reporter $npm_package_config_reporter",
     "coverage": "nyc report --reporter=lcov --reporter=text",
+    "check:commonjs": "npm run build:commonjs && npm run test:commonjs",
     "build": "npm run build:es && npm run build:commonjs",
     "build:es": "cross-env BABEL_ENV=es babel -q src -d es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel -q src -d lib",
-    "prepublish": "npm run test && npm run build",
     "watch:test": "npm run test -- -w",
     "watch:coverage": "nodemon $npm_package_config_test_files $npm_package_config_source_files --delay 2500ms -x 'npm run test:ci && npm run coverage'",
-    "watch:lint": "nodemon src/*.js -x 'eslint'"
+    "watch:lint": "nodemon $npm_package_config_source_files -x 'eslint'"
   },
   "keywords": [
     "enum",

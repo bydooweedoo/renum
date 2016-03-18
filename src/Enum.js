@@ -1,3 +1,5 @@
+'use strict';
+
 import R from 'ramda';
 import _extend from './Extend';
 import { excludeEmpty } from './Utils';
@@ -20,8 +22,11 @@ const extend = _extend([[R.T, R.identity]]);
 
 const getCustomConditions = arg => R.cond(extend.getConditions())(arg);
 
-// fix for node <= 0.12
-const isSymbol = value => typeof value === 'symbol';
+// istanbul ignore next
+const getTypeof = a => typeof(a);
+
+// fix for node v0.10, v0.12
+const isSymbol = R.pipe(getTypeof, R.equals('symbol'));
 
 const enumSingle = R.pipe(
     R.pipe(getCustomConditions),
@@ -40,10 +45,7 @@ const enumSingle = R.pipe(
             R.is(Number),
             R.is(Boolean)
         ), R.pipe(fromSingle, applyToObject)],
-        [R.either(
-            isSymbol,
-            R.is(Symbol)
-        ), R.pipe(
+        [isSymbol, R.pipe(
             R.invoker(0, 'toString'),
             fromSingle,
             applyToObject
