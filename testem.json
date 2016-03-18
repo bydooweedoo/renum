@@ -1,5 +1,6 @@
 {
   "framework": "mocha",
+  "before_tests": "npm run build:umd:test",
   "src_files": [
     "dist/renum.test.js"
   ],
