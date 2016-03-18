@@ -1,7 +1,6 @@
 'use strict';
 
 var webpack = require('webpack');
-
 var env = process.env.NODE_ENV;
 var config = {
     module: {
@@ -30,12 +29,9 @@ if (env !== 'test') {
     config.plugins.push(new webpack.IgnorePlugin(/^(ramda)$/));
 }
 
-if (env === 'production') {
+if (env === 'production' || env === 'test') {
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compressor: {
-            pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
             screw_ie8: true,
             warnings: false
         }
