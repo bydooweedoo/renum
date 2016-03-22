@@ -23,13 +23,10 @@ var config = {
 };
 
 if (env !== 'test') {
-    // config.output.externals = {
-    //     ramda: 'R'
-    // };
-    config.plugins.push(new webpack.IgnorePlugin(/^(ramda)$/));
+    config.externals = ['ramda'];
 }
 
-if (env === 'production' || env === 'test') {
+if (env === 'production') {
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compressor: {
             screw_ie8: true,

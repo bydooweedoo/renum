@@ -1,0 +1,31 @@
+{
+  "name": "renum",
+  "description": "Simple enum using frozen object.",
+  "main": "dist/renum.js",
+  "authors": [
+    "Rémi Marek <bydooweedoo@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "enum",
+    "constants",
+    "freeze",
+    "immutable",
+    "ramda",
+    "redux"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "homepage": "https://github.com/bydooweedoo/renum",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ramda": "^0.19.1"
+  }
+}

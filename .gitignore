@@ -4,3 +4,5 @@ lib/
 es/
 .nyc_output
 typescript/
+bower_components/
+dist/*.test.js
