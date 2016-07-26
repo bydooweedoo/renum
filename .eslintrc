@@ -1,9 +1,10 @@
 {
-    "extends": "airbnb/base",
+    "extends": "airbnb",
     "env": {
         "mocha": true
     },
     "rules": {
-        "indent": [2, 4]
+        "indent": [2, 4],
+        "no-underscore-dangle": ["error", { "allow": ["__"] }]
     }
 }
