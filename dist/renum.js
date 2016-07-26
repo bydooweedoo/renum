@@ -60,7 +60,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	// see `README.md` or `type-definitions/renum.d.ts` for more informations
-	exports.default = __webpack_require__(63);
+	var Enum = __webpack_require__(63);
+
+	exports.default = Enum;
 	module.exports = exports['default'];
 
 /***/ },

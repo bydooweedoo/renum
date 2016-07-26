@@ -72,7 +72,7 @@
     "beautify-benchmark": "0.x",
     "benchmark": "2.x",
     "cross-env": "2.x",
-    "eslint": "3.x",
+    "eslint": "^2.9.0",
     "eslint-config-airbnb": "9.x",
     "eslint-plugin-import": "1.x",
     "eslint-plugin-jsx-a11y": "1.x",
