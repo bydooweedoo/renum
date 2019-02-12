@@ -59,7 +59,7 @@
   "repository": "bydooweedoo/renum",
   "dependencies": {
     "babel-runtime": "6.x",
-    "ramda": "0.x"
+    "ramda": "0.24.1"
   },
   "devDependencies": {
     "babel-cli": "6.x",
